@@ -18,11 +18,6 @@ func StartHTTP() {
 		WriteTimeout:             config.WriteTimeoutMillis,
 	})
 
-	app.Use(func(c *fiber.Ctx) error {
-		fmt.Printf("request - %s", c.Get("HTTP_VERB"))
-		return nil
-	})
-
 	getHandler := v1.NewGetHandler()
 	app.Get(getHandler.Route, getHandler.Get)
 
