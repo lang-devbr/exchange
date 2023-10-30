@@ -18,10 +18,14 @@ func StartHTTP() {
 		WriteTimeout:             config.WriteTimeoutMillis,
 	})
 
-	getHandler := v1.NewGetHandler()
+	app.Use(func(c *fiber.Ctx) error {
+		fmt.Printf("request - %s", c.Get("HTTP_VERB"))
+		return nil
+	})
 
+	getHandler := v1.NewGetHandler()
 	app.Get(getHandler.Route, getHandler.Get)
 
-	fmt.Printf(fmt.Sprintf("app is running at port %d on %s enviroment...", config.Port, config.Env))
+	fmt.Printf("app is running at port %d on %s enviroment...", config.Port, config.Env)
 	app.Listen(fmt.Sprintf(":%d", config.Port))
 }
