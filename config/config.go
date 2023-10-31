@@ -15,6 +15,7 @@ var (
 	Env                string
 	ReadTimeoutMillis  time.Duration
 	WriteTimeoutMillis time.Duration
+	DatabaseName       string
 )
 
 func Load() {
@@ -28,6 +29,8 @@ func Load() {
 	Env = GetString("ENV")
 	ReadTimeoutMillis = GetDuration("HTTP_READ_TIMEOUT_MILLIS")
 	WriteTimeoutMillis = GetDuration("HTTP_WRITE_TIMEOUT_MILLIS")
+
+	DatabaseName = GetString("DB_NAME")
 }
 
 // GetString value of a given env var

@@ -1,38 +1,35 @@
 package v1
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/lang-dev/exchange/internal/infra"
+	"gorm.io/gorm"
 )
 
 type GetHandler struct {
-	Route string
+	Route       string
+	ProductRepo infra.ProductInterface
 }
 
-func NewGetHandler() *GetHandler {
+func NewGetHandler(db *gorm.DB) *GetHandler {
 	return &GetHandler{
-		Route: "/v1/product",
+		Route:       "/v1/product/:id",
+		ProductRepo: infra.NewProductRepository(db),
 	}
 }
 
 func (h *GetHandler) Get(c *fiber.Ctx) error {
-	r := result{
-		Message: "result exchange",
+	id := c.Params("id")
+	if id == "" {
+		return WriteReponse(c, "id cannot be empty", http.StatusBadRequest)
 	}
 
-	bytes, err := json.Marshal(r)
+	p, err := h.ProductRepo.FindByID(id)
 	if err != nil {
-		panic(err)
+		return WriteReponse(c, err.Error(), http.StatusBadRequest)
 	}
 
-	c.Context().Response.SetBodyRaw(bytes)
-	c.Context().Response.Header.SetContentType("application/json")
-	c.SendStatus(http.StatusOK)
-	return nil
-}
-
-type result struct {
-	Message string `json:"message"`
+	return WriteReponse(c, p, http.StatusOK)
 }
