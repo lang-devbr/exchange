@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -32,6 +33,6 @@ func StartHTTP() {
 	postHandler := v1.NewPostHandler(db)
 	app.Post(postHandler.Route, postHandler.Post)
 
-	fmt.Printf("app is running at port %d on %s enviroment...", config.Port, config.Env)
+	log.Printf("app is running at port %d on %s enviroment...", config.Port, config.Env)
 	app.Listen(fmt.Sprintf(":%d", config.Port))
 }
