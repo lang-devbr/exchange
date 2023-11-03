@@ -2,6 +2,7 @@ package v1
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -41,6 +42,8 @@ func RegisterRoutes(app *fiber.App, rs []Route) {
 			app.Patch(r.URI, r.Handler)
 		case http.MethodDelete:
 			app.Patch(r.URI, r.Handler)
+		default:
+			panic(fmt.Sprintf("route %s method not found", r.URI))
 		}
 	}
 }

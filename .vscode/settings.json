@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "localhost",
+            "database": "${workspaceFolder:exchange}/cotacao.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
