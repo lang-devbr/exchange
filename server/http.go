@@ -27,11 +27,7 @@ func StartHTTP() {
 
 	app.Use(logger.New())
 
-	getHandler := v1.NewGetHandler(db)
-	app.Get(getHandler.Route, getHandler.Get)
-
-	postHandler := v1.NewPostHandler(db)
-	app.Post(postHandler.Route, postHandler.Post)
+	v1.RegisterProductHandler(app, db)
 
 	log.Printf("app is running at port %d on %s enviroment...", config.Port, config.Env)
 	app.Listen(fmt.Sprintf(":%d", config.Port))
