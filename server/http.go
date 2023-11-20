@@ -6,7 +6,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	v1 "github.com/lang-dev/exchange/api/product/v1"
+	product "github.com/lang-dev/exchange/api/product/v1"
+	currency "github.com/lang-dev/exchange/api/currency/v1"
 	"github.com/lang-dev/exchange/config"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -27,12 +28,14 @@ func StartHTTP() {
 
 	app.Use(logger.New())
 
-	getHandler := v1.NewGetHandler(db)
-	app.Get(getHandler.Route, getHandler.Get)
-
-	postHandler := v1.NewPostHandler(db)
-	app.Post(postHandler.Route, postHandler.Post)
-
+	getHandlerProduct := product.NewGetHandler(db)
+	getHandlerCurrency := currency.NewGetHandler(db)
+	app.Get(getHandlerProduct.Route, getHandlerProduct.Get)
+	app.Get(getHandlerCurrency.Route, getHandlerCurrency.Get)
+	postHandlerProduct := product.NewPostHandler(db)
+	postHandlerCurrency := currency.NewPostHandler(db)
+	app.Post(postHandlerProduct.Route, postHandlerProduct.Post)
+	app.Post(postHandlerCurrency.Route, postHandlerCurrency.Post)
 	log.Printf("app is running at port %d on %s enviroment...", config.Port, config.Env)
 	app.Listen(fmt.Sprintf(":%d", config.Port))
 }

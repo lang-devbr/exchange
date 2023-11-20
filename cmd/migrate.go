@@ -27,5 +27,6 @@ func mExecute(cmd *cobra.Command, args []string) error {
 		panic(err)
 	}
 	db.AutoMigrate(&entity.Product{})
+	db.AutoMigrate(&entity.Currency{})
 	return nil
 }
