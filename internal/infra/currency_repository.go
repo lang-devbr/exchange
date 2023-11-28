@@ -8,6 +8,7 @@ import (
 type CurrencyInterface interface {
 	Create(p entity.Currency) error
 	FindByID(code string) (entity.Currency, error)
+	FindAll()([]entity.Currency, error)
 }
 
 type CurrencyRepository struct {
@@ -28,4 +29,13 @@ func (r *CurrencyRepository) FindByID(id string) (entity.Currency, error) {
 	var currency entity.Currency
 	err := r.DB.First(&currency, "id = ?", id).Error
 	return currency, err
+}
+
+func (r *CurrencyRepository) FindAll() ([]entity.Currency, error){
+	var currencies []entity.Currency
+	result := r.DB.Find(&currencies)
+	if (result.Error != nil){
+		return nil, result.Error
+	}
+	return currencies, nil
 }
