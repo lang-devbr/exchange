@@ -1,8 +1,11 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+)
 
 type Currency struct {
+	ID   uint   `gorm:"primaryKey" json:"id"`
 	Code string `json:"code"`
 }
 

@@ -25,11 +25,9 @@ func (h *GetHandler) Get(c *fiber.Ctx) error {
 	if id == "" {
 		return WriteReponse(c, "id cannot be empty", http.StatusBadRequest)
 	}
-
 	p, err := h.ProductRepo.FindByID(id)
 	if err != nil {
 		return WriteReponse(c, err.Error(), http.StatusBadRequest)
 	}
-
 	return WriteReponse(c, p, http.StatusOK)
 }

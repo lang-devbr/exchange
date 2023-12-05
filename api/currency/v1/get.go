@@ -15,21 +15,15 @@ type GetHandler struct {
 
 func NewGetHandler(db *gorm.DB) *GetHandler {
 	return &GetHandler{
-		Route:        "/v1/currency/:id",
+		Route:        "/v1/currency",
 		CurrencyRepo: infra.NewCurrencyRepository(db),
 	}
 }
 
-func (h *GetHandler) Get(c *fiber.Ctx) error {
-	id := c.Params("id")
-	if id == "" {
-		return WriteReponse(c, "id cannot be empty", http.StatusBadRequest)
-	}
-
-	p, err := h.CurrencyRepo.FindByID(id)
+func (h *GetHandler) GetCurrencies(c *fiber.Ctx) error {
+	p, err := h.CurrencyRepo.FindAll()
 	if err != nil {
 		return WriteReponse(c, err.Error(), http.StatusBadRequest)
 	}
-
 	return WriteReponse(c, p, http.StatusOK)
 }

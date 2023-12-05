@@ -30,7 +30,7 @@ func (h *PostHandler) Post(c *fiber.Ctx) error {
 		return WriteReponse(c, nil, http.StatusBadRequest)
 	}
 
-	p, err := entity.NewProduct(body.Name, body.Price)
+	p, err := entity.NewProduct(body.Name, body.Price, body.Currencies)
 	if err != nil {
 		return WriteReponse(c, err.Error(), http.StatusBadRequest)
 	}

@@ -1,5 +1,6 @@
 package dto
 
 type CurrencyRequest struct {
-	Code  string  `json:"code"`
+	ID   uint   `gorm:"primaryKey" json:"id"`
+	Code string `json:"code"`
 }

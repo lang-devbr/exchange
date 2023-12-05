@@ -29,3 +29,13 @@ func (r *ProductRepository) FindByID(id string) (entity.Product, error) {
 	err := r.DB.First(&product, "id = ?", id).Error
 	return product, err
 }
+
+func  GetAll (db *gorm.DB) ([]entity.Product, error ) { 
+	var products []entity.Product 
+	err := db.Model(&entity.Product{}).Preload( "currencies" ).Find(&products).Error
+	return products, err
+}
+    
+
+    
+

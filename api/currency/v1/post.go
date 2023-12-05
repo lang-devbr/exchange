@@ -18,7 +18,7 @@ type PostHandler struct {
 
 func NewPostHandler(db *gorm.DB) *PostHandler {
 	return &PostHandler{
-		Route:        "/v1/currency",
+		Route:        "/v1/currencies",
 		CurrencyRepo: infra.NewCurrencyRepository(db),
 	}
 }
