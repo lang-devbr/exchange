@@ -3,7 +3,6 @@ package entity
 import (
 	"errors"
 	"time"
-	"gorm.io/gorm"
 )
 
 type Product struct {
@@ -11,8 +10,7 @@ type Product struct {
 	Name       string         `json:"name"`
 	Price      float64        `json:"price"`
 	Created_At time.Time      `json:"created_At"`
-	Currencies []Currency     `gorm:"many2many:product_currency;foreignkey:ProductID;" json:"currencies"`
-	DeletedAt  gorm.DeletedAt `gorm:"index"`
+	Currencies []Currency     `gorm:"many2many:product_currency;foreignkey:productID;" json:"currencies"`	
 }
 
 func NewProduct(name string, price float64, currencies []Currency) (Product, error) {
