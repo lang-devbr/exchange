@@ -9,23 +9,19 @@ import (
 )
 
 type GetHandler struct {
-	Route       string
-	ProductRepo infra.ProductInterface
+	Route        string
+	CurrencyRepo infra.CurrencyInterface
 }
 
 func NewGetHandler(db *gorm.DB) *GetHandler {
 	return &GetHandler{
-		Route:       "/v1/product/:id",
-		ProductRepo: infra.NewProductRepository(db),
+		Route:        "/v1/currency",
+		CurrencyRepo: infra.NewCurrencyRepository(db),
 	}
 }
 
-func (h *GetHandler) Get(c *fiber.Ctx) error {
-	id := c.Params("id")
-	if id == "" {
-		return WriteReponse(c, "id cannot be empty", http.StatusBadRequest)
-	}
-	p, err := h.ProductRepo.FindByID(id)
+func (h *GetHandler) GetCurrencies(c *fiber.Ctx) error {
+	p, err := h.CurrencyRepo.FindAll()
 	if err != nil {
 		return WriteReponse(c, err.Error(), http.StatusBadRequest)
 	}
